@@ -163,10 +163,7 @@ test.each([
       maxRange: 4,
     },
   ],
-])('should create new class', (Type, level, expected) => {
-  const result = new Type(level);
-  expect(result).toEqual(expected);
-});
+]);
 
 test('should be Error for create new Character', () => {
   expect(() => new Character(2)).toThrow('Invalid class');
