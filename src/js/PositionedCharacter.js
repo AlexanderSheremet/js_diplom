@@ -1,4 +1,4 @@
-import Character from "./characters/Character";
+import Character from './characters/Character';
 
 export default class PositionedCharacter {
   constructor(character, position) {
@@ -9,7 +9,7 @@ export default class PositionedCharacter {
   set character(value) {
     if (!(value instanceof Character)) {
       throw new Error(
-        "character must be instance of Character or its children"
+        'character must be instance of Character or its children',
       );
     }
     this._character = value;
@@ -20,8 +20,8 @@ export default class PositionedCharacter {
   }
 
   set position(value) {
-    if (typeof value !== "number") {
-      throw new Error("position must be a number");
+    if (typeof value !== 'number') {
+      throw new Error('position must be a number');
     }
     this._position = value;
   }

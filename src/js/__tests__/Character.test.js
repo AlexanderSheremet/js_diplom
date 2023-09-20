@@ -1,17 +1,17 @@
-import Vampire from "../characters/Vampire";
-import Daemon from "../characters/Daemon";
-import Undead from "../characters/Undead";
-import Bowman from "../characters/Bowman";
-import Swordsman from "../characters/Swordsman";
-import Magician from "../characters/Magician";
-import Character from "../characters/Character";
+import Vampire from '../characters/Vampire';
+import Daemon from '../characters/Daemon';
+import Undead from '../characters/Undead';
+import Bowman from '../characters/Bowman';
+import Swordsman from '../characters/Swordsman';
+import Magician from '../characters/Magician';
+import Character from '../characters/Character';
 
 test.each([
   [
     Bowman,
     1,
     {
-      type: "bowman",
+      type: 'bowman',
       level: 1,
       attack: 25,
       defence: 25,
@@ -24,7 +24,7 @@ test.each([
     Bowman,
     undefined,
     {
-      type: "bowman",
+      type: 'bowman',
       level: 1,
       attack: 25,
       defence: 25,
@@ -37,7 +37,7 @@ test.each([
     Swordsman,
     1,
     {
-      type: "swordsman",
+      type: 'swordsman',
       level: 1,
       attack: 40,
       defence: 10,
@@ -50,7 +50,7 @@ test.each([
     Swordsman,
     undefined,
     {
-      type: "swordsman",
+      type: 'swordsman',
       level: 1,
       attack: 40,
       defence: 10,
@@ -63,7 +63,7 @@ test.each([
     Magician,
     1,
     {
-      type: "magician",
+      type: 'magician',
       level: 1,
       attack: 10,
       defence: 40,
@@ -76,7 +76,7 @@ test.each([
     Magician,
     undefined,
     {
-      type: "magician",
+      type: 'magician',
       level: 1,
       attack: 10,
       defence: 40,
@@ -89,7 +89,7 @@ test.each([
     Vampire,
     1,
     {
-      type: "vampire",
+      type: 'vampire',
       level: 1,
       attack: 25,
       defence: 25,
@@ -102,7 +102,7 @@ test.each([
     Vampire,
     undefined,
     {
-      type: "vampire",
+      type: 'vampire',
       level: 1,
       attack: 25,
       defence: 25,
@@ -115,7 +115,7 @@ test.each([
     Daemon,
     1,
     {
-      type: "daemon",
+      type: 'daemon',
       level: 1,
       attack: 10,
       defence: 10,
@@ -128,7 +128,7 @@ test.each([
     Daemon,
     undefined,
     {
-      type: "daemon",
+      type: 'daemon',
       level: 1,
       attack: 10,
       defence: 10,
@@ -141,7 +141,7 @@ test.each([
     Undead,
     1,
     {
-      type: "undead",
+      type: 'undead',
       level: 1,
       attack: 40,
       defence: 10,
@@ -154,7 +154,7 @@ test.each([
     Undead,
     undefined,
     {
-      type: "undead",
+      type: 'undead',
       level: 1,
       attack: 40,
       defence: 10,
@@ -163,29 +163,29 @@ test.each([
       maxRange: 4,
     },
   ],
-])("should create new class", (Type, level, expected) => {
+])('should create new class', (Type, level, expected) => {
   const result = new Type(level);
   expect(result).toEqual(expected);
 });
 
-test("should be Error for create new Character", () => {
-  expect(() => new Character(2)).toThrow("Invalid class");
+test('should be Error for create new Character', () => {
+  expect(() => new Character(2)).toThrow('Invalid class');
 });
 
-test("should level up a character", () => {
+test('should level up a character', () => {
   const char = new Bowman(1);
   char.levelUp();
   expect(char.level).toBe(2);
   expect(char.health).toBe(100);
 });
 
-test("should throw error when trying to level up a dead character", () => {
+test('should throw error when trying to level up a dead character', () => {
   const char = new Bowman(1);
   char.health = 0;
   expect(() => char.levelUp()).toThrow("Can't level up a dead character");
 });
 
-test("character level should not exceed 4", () => {
+test('character level should not exceed 4', () => {
   const char = new Bowman(4);
   char.levelUp();
   expect(char.level).toBe(4);

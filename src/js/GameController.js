@@ -1,24 +1,24 @@
-import themes from "./themes";
-import GameState from "./GameState";
-import cursors from "./cursors";
-import getTransitionAttackCells from "./transitionAttackCells";
+import themes from './themes';
+import GameState from './GameState';
+import cursors from './cursors';
+import getTransitionAttackCells from './transitionAttackCells';
 import createPositionsChar, {
   chooseRandPositions,
   restoreChar,
-} from "./createPositions";
+} from './createPositions';
 import {
   calculateDamage,
   getInfo,
   getRandomCharacter,
   overwriteProperties,
   restoreCharacters,
-} from "./utils";
-import Bowman from "./characters/Bowman";
-import Swordsman from "./characters/Swordsman";
-import Magician from "./characters/Magician";
-import Vampire from "./characters/Vampire";
-import Daemon from "./characters/Daemon";
-import Undead from "./characters/Undead";
+} from './utils';
+import Bowman from './characters/Bowman';
+import Swordsman from './characters/Swordsman';
+import Magician from './characters/Magician';
+import Vampire from './characters/Vampire';
+import Daemon from './characters/Daemon';
+import Undead from './characters/Undead';
 
 export default class GameController {
   constructor(gamePlay, stateService) {
@@ -63,7 +63,7 @@ export default class GameController {
           points: this.gameState.points,
         },
       ],
-      isMove: "user",
+      isMove: 'user',
       block: false,
       points: 0,
     };
@@ -79,7 +79,7 @@ export default class GameController {
     this.gameState.transitionCells = [];
     this.gameState.activeCharUser = null;
     this.stateService.save(this.gameState);
-    this.gamePlay.showModalMessage("Your game has saved!", "9997");
+    this.gamePlay.showModalMessage('Your game has saved!', '9997');
   }
 
   loadGame() {
@@ -120,17 +120,17 @@ export default class GameController {
 
   restoreActiveCharacter(savedActiveChar) {
     const restartedActiveChar = restoreChar(savedActiveChar);
-    if (restartedActiveChar && restartedActiveChar.isMove === "user") {
+    if (restartedActiveChar && restartedActiveChar.isMove === 'user') {
       this.reactOnClick(restartedActiveChar, [
-        "bowman",
-        "swordsman",
-        "magician",
+        'bowman',
+        'swordsman',
+        'magician',
       ]);
     }
   }
 
   handleLoadingError() {
-    this.gamePlay.showModalMessage("There's no game in memory", "128075");
+    this.gamePlay.showModalMessage("There's no game in memory", '128075');
     this.newGame();
   }
 
@@ -151,7 +151,7 @@ export default class GameController {
       userTypes,
       this.gamePlay.boardSize,
       false,
-      [maxLevel, charCount]
+      [maxLevel, charCount],
     );
     this.gameState.userTeam = userTeam;
     return userTeam;
@@ -163,7 +163,7 @@ export default class GameController {
       compTypes,
       this.gamePlay.boardSize,
       true,
-      [maxLevel, charCount]
+      [maxLevel, charCount],
     );
     this.gameState.compTeam = compTeam;
     return compTeam;
@@ -172,11 +172,11 @@ export default class GameController {
   resetTeams(gameState) {
     this.gameState.userTeam = restoreCharacters(
       gameState.userTeam,
-      restoreChar
+      restoreChar,
     );
     this.gameState.compTeam = restoreCharacters(
       gameState.compTeam,
-      restoreChar
+      restoreChar,
     );
   }
 
@@ -188,7 +188,7 @@ export default class GameController {
       .getAllPlayer()
       .forEach((player) => player.character.levelUp());
     this.gamePlay.drawUi(
-      themeValues[(this.gameState.levelGame - 1) % themeValues.length]
+      themeValues[(this.gameState.levelGame - 1) % themeValues.length],
     );
     this.gameState.countClick = 0;
     this.gameState.indexSelect = null;
@@ -206,17 +206,15 @@ export default class GameController {
 
     this.gameState.userTeamSurvivors.forEach((survivor) => {
       if (!allStartPositions.includes(survivor.position)) {
-        const newPosition =
-          allStartPositions[
-            Math.floor(Math.random() * allStartPositions.length)
-          ];
+        const newPosition = allStartPositions[
+          Math.floor(Math.random() * allStartPositions.length)
+        ];
         // eslint-disable-next-line no-param-reassign
         survivor.position = newPosition;
       }
     });
 
-    this.gameState.userTeam =
-      this.gameState.userTeamSurvivors.concat(newUserTeam);
+    this.gameState.userTeam = this.gameState.userTeamSurvivors.concat(newUserTeam);
     this.gameState.userTeamSurvivors = [];
     this.gameState.compTeam = this.getCompTeam([
       this.gameState.levelGame - 1,
@@ -228,7 +226,7 @@ export default class GameController {
     const message = this.gameState.points
       ? `Your level ${this.gameState.levelGame} and points ${this.gameState.points}`
       : "There's no points. \n It's the first round";
-    const iconCode = this.gameState.points ? "128076" : "128083";
+    const iconCode = this.gameState.points ? '128076' : '128083';
 
     this.gamePlay.showModalMessage(message, iconCode);
   }
@@ -244,7 +242,7 @@ export default class GameController {
       await this.handleUserTurn(index);
     }
 
-    this.reactOnClick(player, ["bowman", "swordsman", "magician"]);
+    this.reactOnClick(player, ['bowman', 'swordsman', 'magician']);
 
     if (this.gameState.countClick >= 1) {
       await this.handleComputerTurn();
@@ -261,7 +259,7 @@ export default class GameController {
     }
 
     if (this.gameState.indexSelect.red === index) {
-      this.gameState.isMove = "user";
+      this.gameState.isMove = 'user';
       const responseDoDamage = await this.doDamage(index);
       if (responseDoDamage) {
         this.gameState.countClick += 1;
@@ -283,7 +281,7 @@ export default class GameController {
       this.gameState.userTeamSurvivors = this.gameState.userTeam;
       this.gamePlay.showModalMessage(
         `Level up! Your level ${this.gameState.levelGame} and total points are ${this.gameState.points}`,
-        "9996"
+        '9996',
       );
       this.levelUp();
       this.gamePlay.redrawPositions(this.gameState.getAllPlayer());
@@ -304,18 +302,18 @@ export default class GameController {
 
   async handleComputerTurn() {
     this.gameState.activeCharUser = this.gameState.activeChar;
-    this.gameState.isMove = "comp";
+    this.gameState.isMove = 'comp';
     const responseDoAttackComp = await this.doAttackComp(this);
     if (responseDoAttackComp) {
       this.gameState.countClick = 0;
-      this.gameState.isMove = "user";
+      this.gameState.isMove = 'user';
 
       if (this.gameState.findPresumedDeceasedPlayer()) {
         this.gameState.activeChar = this.gameState.activeCharUser;
         this.reactOnClick(this.gameState.activeChar, [
-          "bowman",
-          "swordsman",
-          "magician",
+          'bowman',
+          'swordsman',
+          'magician',
         ]);
         this.gamePlay.redrawPositions(this.gameState.getAllPlayer());
       }
@@ -335,10 +333,10 @@ export default class GameController {
     const isTransitionCell = this.gameState.transitionCells.includes(index);
     const isAttackCell = this.gameState.attackCells.includes(index);
     const isUserCell = this.gameState.userTeam.some(
-      (item) => item.position === index
+      (item) => item.position === index,
     );
     const isCompCell = this.gameState.compTeam.some(
-      (item) => item.position === index
+      (item) => item.position === index,
     );
 
     this.gamePlay.setCursor(cursors.pointer);
@@ -346,12 +344,12 @@ export default class GameController {
     if (this.gameState.indexSelect) {
       if (isTransitionCell && !isUserCell && !isCompCell) {
         this.gameState.indexSelect.green = index;
-        this.gamePlay.selectCell(index, "green");
+        this.gamePlay.selectCell(index, 'green');
       }
 
       if (isAttackCell && isCompCell) {
         this.gameState.indexSelect.red = index;
-        this.gamePlay.selectCell(index, "red");
+        this.gamePlay.selectCell(index, 'red');
         this.gamePlay.setCursor(cursors.crosshair);
       }
     }
@@ -362,10 +360,10 @@ export default class GameController {
 
     if (this.gameState.block) return;
 
-    const hasSelectedGreen = document.querySelector(".selected-green");
+    const hasSelectedGreen = document.querySelector('.selected-green');
     const isAttackCell = this.gameState.attackCells?.includes(index);
     const isCompTeamPosition = this.gameState.compTeam.some(
-      (item) => item.position === index
+      (item) => item.position === index,
     );
 
     if (hasSelectedGreen) {
@@ -377,7 +375,7 @@ export default class GameController {
       }
     }
 
-    if (document.querySelector(".selected-red")) {
+    if (document.querySelector('.selected-red')) {
       this.gamePlay.deselectCell(this.gameState.indexSelect.red);
     }
   }
@@ -395,13 +393,13 @@ export default class GameController {
       this.gameState.transitionCells = getTransitionAttackCells(
         player.position,
         this.gamePlay.boardSize,
-        maxRange
+        maxRange,
       );
       this.gameState.attackCells = getTransitionAttackCells(
         player.position,
         this.gamePlay.boardSize,
         maxAttack,
-        true
+        true,
       );
     } else {
       this.handleInvalidSelection(player.position);
@@ -410,8 +408,8 @@ export default class GameController {
 
   updateSelectedCell(num) {
     if (
-      this.gameState.indexSelect &&
-      document.querySelector(".selected-yellow")
+      this.gameState.indexSelect
+      && document.querySelector('.selected-yellow')
     ) {
       this.gamePlay.deselectCell(this.gameState.indexSelect.yellow);
     }
@@ -422,13 +420,13 @@ export default class GameController {
     const isSelected = this.gameState.indexSelect;
     const isNotInAttackCells = !this.gameState.attackCells.includes(num);
     const isComputerTeamPosition = this.gameState.compTeam.some(
-      (item) => item.position === num
+      (item) => item.position === num,
     );
 
     if (isSelected && isNotInAttackCells && isComputerTeamPosition) {
-      this.gamePlay.showModalMessage("It can't be done", "9940");
+      this.gamePlay.showModalMessage("It can't be done", '9940');
     } else if (!this.gameState.activeChar) {
-      this.gamePlay.showModalMessage("This isn`t your character", "9995");
+      this.gamePlay.showModalMessage('This isn`t your character', '9995');
     }
   }
 
@@ -452,7 +450,7 @@ export default class GameController {
   checkHealthRemoveDead(player) {
     if (player.character.health <= 0) {
       const info = this.gameState.getPresumedDeceasedPlayerInfo(
-        player.position
+        player.position,
       );
 
       if (info.index !== -1) {
@@ -473,8 +471,7 @@ export default class GameController {
   }
 
   updatePicture() {
-    const level =
-      this.gameState.levelGame > 0 ? this.gameState.levelGame - 1 : 0;
+    const level = this.gameState.levelGame > 0 ? this.gameState.levelGame - 1 : 0;
     this.gamePlay.drawUi(Object.values(themes)[level]);
     this.gamePlay.redrawPositions(this.gameState.getAllPlayer());
 
@@ -486,7 +483,7 @@ export default class GameController {
   async doAttackComp() {
     const activeComp = getRandomCharacter(this.gameState.compTeam);
     this.gameState.activeChar = activeComp;
-    this.reactOnClick(activeComp, ["daemon", "undead", "vampire"]);
+    this.reactOnClick(activeComp, ['daemon', 'undead', 'vampire']);
 
     const userPosition = this.gameState.getUserPosition();
 
@@ -511,7 +508,7 @@ export default class GameController {
     if (this.gameState.userTeam.length === 0) {
       this.gameState.block = true;
 
-      this.gamePlay.showModalMessage("You lose!", "129335");
+      this.gamePlay.showModalMessage('You lose!', '129335');
     }
   }
 

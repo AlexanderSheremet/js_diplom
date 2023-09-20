@@ -1,6 +1,6 @@
-import GameController from "../GameController";
+import GameController from '../GameController';
 
-describe("GameController", () => {
+describe('GameController', () => {
   let gameController;
 
   beforeEach(() => {
@@ -16,7 +16,7 @@ describe("GameController", () => {
     gameController = new GameController(gamePlayMock, stateServiceMock);
   });
 
-  test("should call initNewTeams and updatePicture on init", () => {
+  test('should call initNewTeams and updatePicture on init', () => {
     gameController.initNewTeams = jest.fn();
     gameController.updatePicture = jest.fn();
 
@@ -26,7 +26,7 @@ describe("GameController", () => {
     expect(gameController.updatePicture).toHaveBeenCalled();
   });
 
-  test("should update gameState on newGame", () => {
+  test('should update gameState on newGame', () => {
     gameController.reset = jest.fn();
     gameController.init = jest.fn();
 
@@ -38,7 +38,7 @@ describe("GameController", () => {
     expect(gameController.init).toHaveBeenCalled();
   });
 
-  test("should restore gameState on loadGame", () => {
+  test('should restore gameState on loadGame', () => {
     const savedStateMock = {
       levelGame: 2,
       countClick: 1,
@@ -53,10 +53,10 @@ describe("GameController", () => {
     gameController.loadGame();
 
     expect(gameController.restoreGameState).toHaveBeenCalledWith(
-      savedStateMock
+      savedStateMock,
     );
     expect(gameController.restoreActiveCharacter).toHaveBeenCalledWith(
-      savedStateMock.activeChar
+      savedStateMock.activeChar,
     );
     expect(gameController.updatePicture).toHaveBeenCalled();
     expect(gameController.showGameInfo).toHaveBeenCalled();

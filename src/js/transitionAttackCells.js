@@ -23,11 +23,11 @@ function getAttackCells(cells, index, maxRange) {
   for (let i = -maxRange; i <= maxRange; i += 1) {
     for (let j = -maxRange; j <= maxRange; j += 1) {
       if (
-        row + i >= 0 &&
-        findIndex + j >= 0 &&
-        row + i < cells.length &&
-        findIndex + j < cells.length &&
-        cells[row + i][findIndex + j] !== index
+        row + i >= 0
+        && findIndex + j >= 0
+        && row + i < cells.length
+        && findIndex + j < cells.length
+        && cells[row + i][findIndex + j] !== index
       ) {
         allowedCells.push(cells[row + i][findIndex + j]);
       }
@@ -86,7 +86,7 @@ export default function getTransitionAttackCells(
   index,
   boardSize,
   maxRange,
-  attack = false
+  attack = false,
 ) {
   const arrayCells = [];
   for (let i = 0; i < boardSize ** 2; i += 1) {

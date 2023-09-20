@@ -2,7 +2,7 @@ export default class GameState {
   constructor(gamePlay) {
     this.levelGame = 1;
     this.gamePlay = gamePlay;
-    this.isMove = "user";
+    this.isMove = 'user';
     this.countClick = 0;
     this.userTeamSurvivors = [];
     this.history = [];
@@ -18,8 +18,7 @@ export default class GameState {
   }
 
   getAllPlayer() {
-    if (!this.userTeam || !this.compTeam)
-      throw new Error("it must have 2 arguments");
+    if (!this.userTeam || !this.compTeam) throw new Error('it must have 2 arguments');
     return [...this.userTeam, ...this.compTeam];
   }
 
@@ -28,24 +27,22 @@ export default class GameState {
   }
 
   getUserPosition() {
-    const foundItem = this.userTeam.find((item) =>
-      this.attackCells.includes(item.position)
-    );
+    const foundItem = this.userTeam.find((item) => this.attackCells.includes(item.position));
     return foundItem ? foundItem.position : undefined;
   }
 
   findPresumedDeceasedPlayer() {
     return this.getAllPlayer().find(
-      (e) => e.position === this.activeCharUser?.position
+      (e) => e.position === this.activeCharUser?.position,
     );
   }
 
   getPresumedDeceasedPlayerInfo(position) {
-    const team = this.isMove === "comp" ? this.userTeam : this.compTeam;
+    const team = this.isMove === 'comp' ? this.userTeam : this.compTeam;
 
     return {
       index: team.findIndex((item) => position === item.position),
-      teamKey: this.isMove === "comp" ? "userTeam" : "compTeam",
+      teamKey: this.isMove === 'comp' ? 'userTeam' : 'compTeam',
     };
   }
 

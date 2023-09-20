@@ -1,4 +1,4 @@
-import { upAttackDefence } from "../utils";
+import { upAttackDefence } from '../utils';
 
 /**
  * Базовый класс, от которого наследуются классы персонажей
@@ -15,9 +15,9 @@ import { upAttackDefence } from "../utils";
  * vampire
  */
 export default class Character {
-  constructor(level, type = "generic") {
-    if (new.target.name === "Character") {
-      throw new Error("Invalid class");
+  constructor(level, type = 'generic') {
+    if (new.target.name === 'Character') {
+      throw new Error('Invalid class');
     }
     this.type = type;
     this.level = level;
