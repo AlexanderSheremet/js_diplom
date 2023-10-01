@@ -1,7 +1,6 @@
 export default class GameState {
   constructor(gamePlay) {
     this.levelGame = 1;
-    this.gamePlay = gamePlay;
     this.isMove = 'user';
     this.countClick = 0;
     this.userTeamSurvivors = [];
@@ -18,7 +17,7 @@ export default class GameState {
   }
 
   getAllPlayer() {
-    if (!this.userTeam || !this.compTeam) throw new Error('it must have 2 arguments');
+    if (!this.userTeam || !this.compTeam) throw new Error('must not contain empty arguments');
     return [...this.userTeam, ...this.compTeam];
   }
 
@@ -35,15 +34,6 @@ export default class GameState {
     return this.getAllPlayer().find(
       (e) => e.position === this.activeCharUser?.position,
     );
-  }
-
-  getPresumedDeceasedPlayerInfo(position) {
-    const team = this.isMove === 'comp' ? this.userTeam : this.compTeam;
-
-    return {
-      index: team.findIndex((item) => position === item.position),
-      teamKey: this.isMove === 'comp' ? 'userTeam' : 'compTeam',
-    };
   }
 
   getPlayer(index) {
